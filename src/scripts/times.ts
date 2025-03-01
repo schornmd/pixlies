@@ -1,4 +1,14 @@
-import { DateTime } from "luxon";
+import { DateTime, type DurationObjectUnits, type DurationUnit } from "luxon";
+
+type Units = Record<DurationUnit, string>;
+const units: Partial<Units> = {
+  years: "y",
+  months: "mo",
+  days: "d",
+  hours: "h",
+  minutes: "m",
+  seconds: "s",
+};
 
 const getTimeDifference = (now: DateTime, end: string): [boolean, string] => {
   const date = DateTime.fromISO(end);
@@ -6,19 +16,16 @@ const getTimeDifference = (now: DateTime, end: string): [boolean, string] => {
     return [false, "Unknown"];
   }
 
-  const diff = now.diff(date, [
-    "years",
-    "months",
-    "days",
-    "hours",
-    "minutes",
-    "seconds",
-  ]);
-  return [
-    true,
-    `${diff.years}y ${diff.months}mo ${diff.days}d ${diff.hours}h ${diff.minutes}m ${~~diff
-      .seconds}s`,
-  ];
+  const diff = now.diff(date, Object.keys(units) as DurationUnit[]);
+  const format = Object.entries(units)
+    .map(([unit, abbreviation]) => {
+      const value = ~~diff[unit as keyof DurationObjectUnits];
+      return value > 0 ? `${value}${abbreviation}` : null;
+    })
+    .filter(Boolean)
+    .join(" ");
+
+  return [true, format || "0s"];
 };
 
 const updateTimes = () => {
