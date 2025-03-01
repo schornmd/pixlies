@@ -9,7 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@picocss/pico": "^2.0.6",
-    "astro": "^5.2.6"
+    "@types/luxon": "^3.4.2",
+    "astro": "^5.2.6",
+    "luxon": "^3.5.0"
   }
 }
