@@ -4,18 +4,18 @@ import seasons from "../data/seasons";
 ---
 
 <Layout>
-	<main class="container">
-		<h1>How long ago did each Pixlies season end?</h1>
+  <main class="container">
+    <h1>How long ago did each Pixlies season end?</h1>
 
-		{seasons.map((season) => (
-			<article>
-				<b>{season.title}</b>
-				<p aria-busy="true" data-end={season.end}>Loading...</p>
-			</article>
-		))}
-	</main>
+    {seasons.map((season) => (
+      <article>
+        <b>{season.title}</b>
+        <p aria-busy="true" data-end={season.end}>Loading...</p>
+      </article>
+    ))}
+  </main>
 </Layout>
 
 <script>
-	import "../scripts/times";
+  import "../scripts/times";
 </script>
