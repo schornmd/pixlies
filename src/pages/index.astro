@@ -18,10 +18,6 @@ import seasons from "../data/seasons";
 		import { DateTime } from "luxon";
 
 		const getTimeDifference = (now: DateTime, end: string): [boolean, string] => {
-			if (!end) {
-				return [false, "Unknown"];
-			}
-
 			const date = DateTime.fromISO(end);
 			if (!date.isValid) {
 				return [false, "Unknown"];
