@@ -1,7 +1,7 @@
-import { DateTime, type DurationObjectUnits, type DurationUnit } from "luxon";
+import { DateTime, type DurationObjectUnits } from "luxon";
 
-type Units = Record<DurationUnit, string>;
-const units: Partial<Units> = {
+type Unit = keyof DurationObjectUnits;
+const units: Partial<Record<Unit, string>> = {
   years: "y",
   months: "mo",
   days: "d",
@@ -16,10 +16,10 @@ const getTimeDifference = (now: DateTime, end: string): [boolean, string] => {
     return [false, "Unknown"];
   }
 
-  const diff = now.diff(date, Object.keys(units) as DurationUnit[]);
+  const diff = now.diff(date, Object.keys(units) as Unit[]);
   const format = Object.entries(units)
     .map(([unit, abbreviation]) => {
-      const value = ~~diff[unit as keyof DurationObjectUnits];
+      const value = ~~diff[unit as Unit];
       return value > 0 ? `${value}${abbreviation}` : null;
     })
     .filter(Boolean)
